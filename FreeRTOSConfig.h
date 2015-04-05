@@ -90,16 +90,21 @@ int  get_current_interrupt_number
 	                  (pxNewTCB)->pcTaskName, \
 	                  (pxNewTCB)->uxPriority);
 
-#define traceTASK_SWITCHED_OUT() \
+#ifdef GET_CONTEXT_SWITCH_COST
+  #define traceTASK_SWITCHED_OUT()
+  #define traceTASK_SWITCHED_IN()
+#else
+  #define traceTASK_SWITCHED_OUT() \
 	tskTCB *pxPreviousTCB = pxCurrentTCB; \
 	unsigned previous_systick_current = *(unsigned *) 0xE000E018;
 
-#define traceTASK_SWITCHED_IN() \
+  #define traceTASK_SWITCHED_IN() \
 	if (pxPreviousTCB != pxCurrentTCB) { \
 		trace_task_switch(pxPreviousTCB, \
 		                  previous_systick_current, \
 		                  pxCurrentTCB); \
 	}
+#endif
 
 #define traceCREATE_MUTEX( pxNewQueue ) trace_create_mutex(pxNewQueue);
 

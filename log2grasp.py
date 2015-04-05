@@ -5,13 +5,47 @@
 
 # Configure wether to trace these feature
 # Warning : Too many contents may freeze Grasp
+import sys, getopt
+
 TRACE_QUEUE = True
 TRACE_MUTEX = True
 TRACE_BINARY_SEMAPHORE = False
 TRACE_INTERRUPT = False
 
+cxt_sw_title = "vTaskSwitchContext"
+
+def usage():
+	print 'Usage: log2grasp.py [-f|-h]'
+	print '-f, --full-context'
+	print '\tful cost for context switch'
+	print '-h, --help'
+	print '\tprint this help meun'
+
+def main(argv):
+	global cxt_sw_title
+
+	try:
+		opts, args = getopt.getopt(argv,"hf",["--full-context", "--help"])
+	except getopt.GetoptError:
+		usage();
+		sys.exit(2)
+	for opt, arg in opts:
+		if opt in ("h", "--help"):
+			usage()
+			sys.exit(0)
+		elif opt in ("-f", "--full-context"):
+			cxt_sw_title = "ContextSwitch"
+
+if __name__ == "__main__":
+	   main(sys.argv[1:])
+
 log = open('log', 'r')
 lines = log.readlines()
+
+cxt_sw_cost = open('%s.log' % cxt_sw_title, 'w')
+
+cxt_sw_cost.write('[%-20s]\t[%-20s]\t %s (microseconds)\n' %("Out Task", "In Task", "Cost"))
+cxt_sw_cost.write('-------------------------------------------------------------------------\n')
 
 tasks = {}
 events = []
@@ -19,6 +53,8 @@ mutexes = {}
 all_queues = {}
 binsems = {}
 queues = {}
+total_cost = 0
+cxt_sw_times = 0
 
 for line in lines :
 	line = line.strip()
@@ -38,14 +74,20 @@ for line in lines :
 	elif inst == 'switch' :
 		out_task, in_task, tick, tick_reload, out_minitick, in_minitick = args.split(' ')
 		
-		out_time = (int(tick) + (int(tick_reload) - int(out_minitick)) / int(tick_reload)) / 100 * 1000;
-		in_time  = (int(tick) + (int(tick_reload) - int(in_minitick))  / int(tick_reload)) / 100 * 1000;
+		out_time = (int(tick) + (int(tick_reload) - int(out_minitick)) / float(tick_reload)) / 100 * 1000;
+		in_time  = (int(tick) + (int(tick_reload) - int(in_minitick))  / float(tick_reload)) / 100 * 1000;
+
+		cost = ((in_time - out_time) * 1000)
+		total_cost += cost
+		cxt_sw_times += 1
 		
 		event = {}
 		event['type'] = 'task out'
 		event['task'] = out_task
 		event['time'] = out_time
 		event['next'] = in_task
+		# microsecond for the cost of the context switch
+		event['cs_cost'] = cost
 		events.append(event);
 
 		event = {}
@@ -53,6 +95,13 @@ for line in lines :
 		event['task'] = in_task
 		event['time'] = in_time
 		events.append(event);
+
+		in_task_info = tasks[out_task]
+		out_task_info = tasks[in_task]
+
+		# microsecond for the cost of the context switch
+		cxt_sw_cost.write('[%-20s]\t[%-20s]\t %4d\n' %(out_task_info['name'], in_task_info['name'], cost))
+
 
 		last_task = in_task
 
@@ -165,7 +214,16 @@ for line in lines :
 
 log.close()
 
+cxt_sw_cost.write('-------------------------------------------------------------------------\n')
+cxt_sw_cost.write('Total times for context switch: %d cost:%d average: %f\n' % (cxt_sw_times, total_cost, total_cost/cxt_sw_times))
+
+cxt_sw_cost.close()
+
 grasp = open('sched.grasp', 'w')
+
+grasp.write('newTask taskCxtSwitch -priority 0  -name "%s" -color orange1\n' % (cxt_sw_title))
+grasp.write('newBuffer BufferCxtSwitch -name "%s(us)"\n' % (cxt_sw_title))
+grasp.write('bufferplot 0 resize BufferCxtSwitch 1\n')
 
 for id in tasks :
 	task = tasks[id]
@@ -196,10 +254,14 @@ for event in events :
 	if event['type'] == 'task out' :
 		grasp.write('plot %f jobPreempted job%s.1 -target job%s.1\n' %
 				    (event['time'], event['task'], event['next']))
-
+		grasp.write('plot %f jobArrived jobCxtSwitch taskCxtSwitch\n' % (event['time']))
+		grasp.write('plot %f jobResumed jobCxtSwitch\n' % (event['time']))
+		grasp.write('bufferplot %f push BufferCxtSwitch "%d"\n' % (event['time'], event['cs_cost']))
 	elif event['type'] == 'task in' :
 		grasp.write('plot %f jobResumed job%s.1\n' %
 					(event['time'], event['task']))
+		grasp.write('plot %f jobCompleted jobCxtSwitch\n' % (event['time']))
+		grasp.write('bufferplot %f pop BufferCxtSwitch\n' % (event['time']))
 
 	elif event['type'] == 'mutex give' :
 		grasp.write('plot %f jobReleasedMutex job%s.1 mutex%s\n' % (event['time'], event['task'], event['target']));

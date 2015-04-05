@@ -161,6 +161,16 @@ void queue_str_task2(void *pvParameters)
 	queue_str_task("Hello 2\n\r", 50);
 }
 
+void new_task1(void *pvParameters)
+{
+	queue_str_task("New A\n\r", 50);
+}
+
+void new_task2(void *pvParameters)
+{
+	queue_str_task("New B\n\r", 20);
+}
+
 void serial_readwrite_task(void *pvParameters)
 {
 	serial_str_msg msg;
@@ -235,6 +245,15 @@ int main()
 	            (signed portCHAR *) "Serial Write 2",
 	            512 /* stack size */,
 	            NULL, tskIDLE_PRIORITY + 10, NULL);
+
+	xTaskCreate(new_task1,
+	            (signed portCHAR *) "New 1",
+	            512 /* stack size */, NULL,
+	            tskIDLE_PRIORITY + 4, NULL);
+	xTaskCreate(new_task2,
+	            (signed portCHAR *) "New 2",
+	            512 /* stack size */,
+	            NULL, tskIDLE_PRIORITY + 4, NULL);
 
 	/* Create a task to write messages from the queue to the RS232 port. */
 	xTaskCreate(rs232_xmit_msg_task,
@@ -390,6 +409,13 @@ void trace_task_switch(void *prev_task,
 	                   xTaskGetTickCount(), get_reload(),
 	                   prev_tick, get_current());
 	write(logfile, buf, len);
+}
+
+void trace_context_switch(unsigned int prev_tick,
+                       void *curr_task,
+                       void *prev_task)
+{
+	trace_task_switch(prev_task, prev_tick, curr_task);
 }
 
 void trace_create_mutex(void *mutex)

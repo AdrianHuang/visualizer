@@ -4,6 +4,7 @@ QEMU_STM32 ?= ../qemu_stm32/arm-softmmu/qemu-system-arm
 ARCH = CM3
 VENDOR = ST
 PLAT = STM32F10x
+CFLAGS = -DGET_CONTEXT_SWITCH_COST
 LIB_PATH = ../freertos-basic/freertos/libraries
 CMSIS_LIB = $(LIB_PATH)/CMSIS/$(ARCH)
 STM32_LIB = $(LIB_PATH)/STM32F10x_StdPeriph_Driver
@@ -18,7 +19,7 @@ all: out/main.bin
 
 out/main.bin: main.c stm32_p103.c stm32_p103.h FreeRTOSConfig.h stm32f10x_conf.h
 	mkdir -p out
-	$(CROSS_COMPILE)gcc \
+	$(CROSS_COMPILE)gcc $(CFLAGS) \
 		-Wl,-Tmain.ld -nostartfiles \
 		-I. -I$(FREERTOS_INC) -I$(FREERTOS_PORT_INC) \
 		-I$(LIB_PATH)/CMSIS/CM3/CoreSupport \
@@ -58,5 +59,10 @@ qemuauto: out/main.bin gdbscript
 	python log2grasp.py
 	../grasp_linux/grasp sched.grasp
 
+qemuautoFullConextSwitch: out/main.bin gdbscript
+	bash emulate.sh out/main.bin
+	python log2grasp.py -f
+	../grasp_linux/grasp sched.grasp
+
 clean:
-	rm -rf out log sched.grasp
+	rm -rf out log sched.grasp vTaskSwitchContext.log ContextSwitch.log
