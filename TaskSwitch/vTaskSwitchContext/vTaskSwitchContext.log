@@ -1,0 +1,133 @@
+[Out Task            ]	[In Task             ]	 Cost (microseconds)
+-------------------------------------------------------------------------
+[1: LED Flash        ]	[7: Serial Read/Wri  ]	 761
+[2: Serial Write 1   ]	[1: LED Flash        ]	 117
+[3: Serial Write 2   ]	[2: Serial Write 1   ]	  11
+[4: New 1            ]	[3: Serial Write 2   ]	   9
+[5: New 2            ]	[4: New 1            ]	   9
+[2: Serial Write 1   ]	[5: New 2            ]	   7
+[6: Serial Xmit Str  ]	[2: Serial Write 1   ]	 154
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  12
+[5: New 2            ]	[8: IDLE             ]	  10
+[6: Serial Xmit Str  ]	[5: New 2            ]	   8
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[6: Serial Xmit Str  ]	[8: IDLE             ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   9
+[5: New 2            ]	[8: IDLE             ]	   9
+[6: Serial Xmit Str  ]	[5: New 2            ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[6: Serial Xmit Str  ]	[8: IDLE             ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  12
+[3: Serial Write 2   ]	[8: IDLE             ]	  19
+[4: New 1            ]	[3: Serial Write 2   ]	  14
+[6: Serial Xmit Str  ]	[4: New 1            ]	  14
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  16
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  14
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[5: New 2            ]	[8: IDLE             ]	  15
+[6: Serial Xmit Str  ]	[5: New 2            ]	  11
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  13
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  10
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  16
+[5: New 2            ]	[8: IDLE             ]	  11
+[6: Serial Xmit Str  ]	[5: New 2            ]	   9
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  11
+[1: LED Flash        ]	[8: IDLE             ]	  12
+[8: IDLE             ]	[1: LED Flash        ]	   9
+[3: Serial Write 2   ]	[8: IDLE             ]	  15
+[4: New 1            ]	[3: Serial Write 2   ]	  12
+[5: New 2            ]	[4: New 1            ]	  10
+[6: Serial Xmit Str  ]	[5: New 2            ]	  11
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  12
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  11
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  16
+[5: New 2            ]	[8: IDLE             ]	  11
+[6: Serial Xmit Str  ]	[5: New 2            ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[6: Serial Xmit Str  ]	[8: IDLE             ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  10
+[5: New 2            ]	[8: IDLE             ]	  10
+[6: Serial Xmit Str  ]	[5: New 2            ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[6: Serial Xmit Str  ]	[8: IDLE             ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  17
+[3: Serial Write 2   ]	[8: IDLE             ]	  16
+[4: New 1            ]	[3: Serial Write 2   ]	  10
+[6: Serial Xmit Str  ]	[4: New 1            ]	  11
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  12
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  10
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  16
+[5: New 2            ]	[8: IDLE             ]	  19
+[6: Serial Xmit Str  ]	[5: New 2            ]	  15
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  17
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  14
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[5: New 2            ]	[8: IDLE             ]	  11
+[6: Serial Xmit Str  ]	[5: New 2            ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[6: Serial Xmit Str  ]	[8: IDLE             ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   9
+[1: LED Flash        ]	[8: IDLE             ]	  20
+[8: IDLE             ]	[1: LED Flash        ]	  15
+[2: Serial Write 1   ]	[8: IDLE             ]	  17
+[3: Serial Write 2   ]	[2: Serial Write 1   ]	  12
+[4: New 1            ]	[3: Serial Write 2   ]	  11
+[5: New 2            ]	[4: New 1            ]	  12
+[6: Serial Xmit Str  ]	[5: New 2            ]	  15
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  13
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  13
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  16
+[5: New 2            ]	[8: IDLE             ]	  19
+[6: Serial Xmit Str  ]	[5: New 2            ]	  15
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  17
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  15
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  12
+[5: New 2            ]	[8: IDLE             ]	  11
+[6: Serial Xmit Str  ]	[5: New 2            ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[6: Serial Xmit Str  ]	[8: IDLE             ]	   6
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[3: Serial Write 2   ]	[8: IDLE             ]	   9
+[4: New 1            ]	[3: Serial Write 2   ]	   7
+[6: Serial Xmit Str  ]	[4: New 1            ]	   7
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  12
+[5: New 2            ]	[8: IDLE             ]	  19
+[6: Serial Xmit Str  ]	[5: New 2            ]	  15
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  16
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  15
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  10
+[5: New 2            ]	[8: IDLE             ]	  20
+[6: Serial Xmit Str  ]	[5: New 2            ]	  16
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  17
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  16
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[1: LED Flash        ]	[8: IDLE             ]	  19
+[8: IDLE             ]	[1: LED Flash        ]	  15
+[3: Serial Write 2   ]	[8: IDLE             ]	  19
+[4: New 1            ]	[3: Serial Write 2   ]	  14
+[5: New 2            ]	[4: New 1            ]	  14
+[6: Serial Xmit Str  ]	[5: New 2            ]	  14
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  16
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  14
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[5: New 2            ]	[8: IDLE             ]	  15
+[6: Serial Xmit Str  ]	[5: New 2            ]	  16
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   9
+[5: New 2            ]	[8: IDLE             ]	  25
+[6: Serial Xmit Str  ]	[5: New 2            ]	  15
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  17
+[6: Serial Xmit Str  ]	[8: IDLE             ]	  15
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[3: Serial Write 2   ]	[8: IDLE             ]	  12
+[4: New 1            ]	[3: Serial Write 2   ]	   9
+[6: Serial Xmit Str  ]	[4: New 1            ]	   9
+[8: IDLE             ]	[6: Serial Xmit Str  ]	  39
+[6: Serial Xmit Str  ]	[8: IDLE             ]	   8
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[5: New 2            ]	[8: IDLE             ]	  10
+[6: Serial Xmit Str  ]	[5: New 2            ]	   8
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+[6: Serial Xmit Str  ]	[8: IDLE             ]	   8
+[8: IDLE             ]	[6: Serial Xmit Str  ]	   8
+-------------------------------------------------------------------------
+Total times for context switch: 129 cost:2624 average: 20.345743
